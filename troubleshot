@@ -1,0 +1,36 @@
+php-fpm  gagal restart
+malem ini dapet error di sebuah server temen dia tidak bisa restart php-fm di whm/cpanel nya keterangan error nya seperti ini
+
+Nov 02 21:59:32 server.XXXX systemd[1]: ea-php74-php-fpm.service failed.
+Nov 02 22:00:23 server.XXXX systemd[1]: ea-php74-php-fpm.service failed to run 'start' task: Read-only file system
+Nov 02 22:00:23 server.XXXX systemd[1]: Failed to start The PHP FastCGI Process Manager.
+
+coba test bikin file di tmp
+
+[root@server ~]# touch /tmp/test
+touch: cannot touch ‘/tmp/test’: Read-only file system
+
+nah kalo dapet error kayak gini,begini cara nya khusus yg di whm/cpanel yak
+Disable  /tmp dari fstab nano/vim /etc/fstab
+lihat tampilan seperti ini
+/usr/tmpDSK             /tmp                    ext3    defaults       0 0
+
+/usr/swpDSK swap swap defaults 0 0
+/tmp             /var/tmp                    ext3    defaults,bind        0 0
+
+pastiin noauto dah muncul yak di sebelah bind/default biasanya sudah otomatis ada kalo error seperti itu kalo ada gak perlu edit kalo belomedit default,bind,noauto
+
+disable secure tmp service
+systemctl disable securetmp
+
+reboot server 
+setelah reboot jalanin perintah ini 
+/bin/rm /usr/tmpDSK
+ 
+jalanin secure tmp service 
+/scripts/securetmp
+ada pertanyaan jawab "Y" saja kasih jawaban nya jangan panjang-panjang bukan soal essai soalnya
+reboot kembali server nya 
+
+setelah reboot coba restart php-fpm nya 
+
