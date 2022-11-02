@@ -33,4 +33,4 @@ ada pertanyaan jawab "Y" saja kasih jawaban nya jangan panjang-panjang bukan soa
 reboot kembali server nya 
 
 setelah reboot coba restart php-fpm nya 
-
+sumber https://support.cpanel.net/hc/en-us/articles/1500005938262-Unable-to-restart-PHP-FPM-Apache-tmp-read-only-mode
